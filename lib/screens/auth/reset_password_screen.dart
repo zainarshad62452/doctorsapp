@@ -18,12 +18,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              ResetForm(),
-            ]),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: ResetForm(),
+        ),
       ),
     );
   }
@@ -59,6 +57,7 @@ class _ResetFormState extends State<ResetForm> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text("Please Enter your email for forgot password"),
         Padding(

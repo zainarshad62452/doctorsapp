@@ -1,6 +1,9 @@
+import 'package:doctorsapp/screens/auth/reset_password_screen.dart';
 import 'package:doctorsapp/widget/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:doctorsapp/screens/auth/register.dart';
 
@@ -196,6 +199,8 @@ class _SignInState extends State<SignIn> {
                     overlayColor:
                         MaterialStateProperty.all(Colors.transparent)),
                 onPressed: () {
+
+                  Get.to(()=>ResetPasswordScreen());
 
                 },
                 child: Text(
