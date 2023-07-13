@@ -17,10 +17,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Reset Password"),
+        backgroundColor: Colors.tealAccent.shade700,
+      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: ResetForm(),
+          child: Column(
+            children: [
+              Image.asset("assets/search.jpg"),
+              SizedBox(height: 20.0,),
+              ResetForm(),
+            ],
+          ),
         ),
       ),
     );
@@ -60,6 +70,7 @@ class _ResetFormState extends State<ResetForm> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text("Please Enter your email for forgot password"),
+        SizedBox(height: 20.0,),
         Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
@@ -94,7 +105,7 @@ class _ResetFormState extends State<ResetForm> {
                     snackbar("Done", "An email is sent to ${_emailController.text} to change the password");
                     Get.to(()=>SignIn());
                   });
-                },child: Text("Send Reset Link",style: TextStyle(color: Colors.white),),color: Colors.tealAccent,),
+                },child: Text("Send Reset Link",style: TextStyle(color: Colors.white),),color:Colors.tealAccent.shade700,),
 
               ],
             ),
