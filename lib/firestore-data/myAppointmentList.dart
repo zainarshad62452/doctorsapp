@@ -227,6 +227,7 @@ class _MyAppointmentListState extends State<MyAppointmentList> {
                                           onPressed: () {
                                             print(">>>>>>>>>" + document.id);
                                             _documentID = document.id;
+                                            print(">>>>>>>>>>>>>$_documentID");
                                             print(">>>>>>>>>" + DateTime.now().difference(document['date'].toDate()).inMinutes.toString());
                                             _compareDate(document['date'].toDate().toString())
                                                 ? DateTime.now().difference(document['date'].toDate()).inMinutes >=0?Get.to(()=>CallPage(callID: _documentID!,userId: FirebaseAuth.instance.currentUser!.uid, username: document['name'],))

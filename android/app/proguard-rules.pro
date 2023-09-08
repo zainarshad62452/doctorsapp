@@ -1,1 +1,2 @@
--keep class **.zego.** { *; }
+-keep class org.webrtc.** { *; }
+-dontwarn org.chromium.build.BuildHooksAndroid

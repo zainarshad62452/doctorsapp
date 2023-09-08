@@ -2,24 +2,30 @@
 import 'dart:ui';
 
 import 'package:doctorsapp/config.dart';
+import 'package:dyte_client/dyte.dart';
+import 'package:dyte_client/dyteMeeting.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
-import 'package:zego_uikit/zego_uikit.dart';
+
+import '../../model/dyte_api.dart';
 
 class AudioCallPage extends StatelessWidget {
-  const AudioCallPage({Key? key, required this.callID,required this.userId,required this.username}) : super(key: key);
+   AudioCallPage({Key? key, required this.callID,required this.userId,required this.username}) : super(key: key);
   final String callID;
   final String username;
   final String userId;
-  static Future<void> ensureScreenSize([
+  String authToken=" ";
+  joinMeeting() async {
+    authToken = await DyteAPI.addParticipantToMeeting(callID,username,userId);
+  }
+   Future<void> ensureScreenSize([
     FlutterView? window,
     Duration duration = const Duration(milliseconds: 10),
   ]) async {
     final binding = WidgetsFlutterBinding.ensureInitialized();
     window ??= binding.window;
-
+    await joinMeeting();
     if (window.physicalGeometry.isEmpty) {
       return Future.delayed(duration, () async {
         binding.deferFirstFrame();
@@ -30,6 +36,8 @@ class AudioCallPage extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
         children: [
@@ -40,16 +48,16 @@ class AudioCallPage extends StatelessWidget {
                 return Material(
                   child: LayoutBuilder(
                     builder: (BuildContext context, BoxConstraints constraints) {
-                      return ZegoUIKitPrebuiltCall(
-                        controller: ZegoUIKitPrebuiltCallController(),
-                        appID: kAppID, // Fill in the appID that you get from ZEGOCLOUD Admin Console.
-                        appSign: kAppSign, // Fill in the appSign that you get from ZEGOCLOUD Admin Console.
-                        userID: userId,
-                        userName: username,
-                        callID: callID,
-                        // You can also use groupVideo/groupVoice/oneOnOneVoice to make more types of calls.
-                        config: ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall()
-                          ..onOnlySelfInRoom = (context) => Get.back(),
+                      return SizedBox(
+                          width: width,
+                          height: height,
+                          child: DyteMeeting(
+                            roomName: "$callID",
+                            authToken: authToken,
+                            onInit: (DyteMeetingHandler meeting) async {
+                              var self = await meeting.self;
+                            },
+                          )
                       );
                     },),
                 );

@@ -5,6 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:doctorsapp/screens/user/myAppointments.dart';
 import 'package:intl/intl.dart';
 
+import '../../model/dyte_api.dart';
+import '../../model/models.dart';
+
 class BookingScreen extends StatefulWidget {
   final String? doctor;
   final String? doctorUid;
@@ -565,12 +568,15 @@ class _BookingScreenState extends State<BookingScreen> {
 
   Future<void> _createAppointment() async {
     print(dateUTC + ' ' + date_Time + ':00');
+
+    Meeting meeting = await DyteAPI.createMeeting("${_nameController.text}");
+
    final newUser = FirebaseFirestore.instance
         .collection('PendingAppointments')
-        .doc();
+        .doc(meeting.id);
         newUser.set({
       'name': _nameController.text,
-      'id': newUser.id,
+      'id': meeting.id,
       'phone': _phoneController.text,
       'description': _descriptionController.text,
       'doctor': _doctorController.text,

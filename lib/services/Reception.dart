@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctorsapp/screens/auth/signIn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +12,6 @@ import '../widget/snackbar.dart';
 class Reception {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
-
   userReception() async {
 
     if(auth.currentUser != null){
